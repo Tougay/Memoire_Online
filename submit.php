@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 <body>
     <div class="container">
-        <h1>Publier un mémoire sur MemoireOnline</h1>
+        <h1>Publier un mémoire sur MemoPublish</h1>
         <form action="submit.php" method="post" enctype="multipart/form-data" id="memoireForm">
             <label for="titre">Titre du mémoire :</label>
             <input type="text" name="titre" id="titre" required><br><br>
