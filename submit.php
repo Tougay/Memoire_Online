@@ -188,9 +188,9 @@ document.addEventListener('DOMContentLoaded', function () {
         </form>
     </div>
     <footer>
-        <p>Si vous rencontrez des difficultés pour utiliser ce formulaire, n'hésitez pas à prendre contact avec le <a href="mailto:webmaster@memoireonline.com">webmaster</a>.</p>
+        <p>Si vous rencontrez des difficultés pour utiliser ce formulaire, n'hésitez pas à prendre contact avec le <a href="memopublish@gmail.com">webmaster</a>.</p>
         <p><a href="index.php">Retour page d'accueil</a></p>
-    </footer>
+    </footer>   
 </body>
 </html>
 
