@@ -130,50 +130,7 @@ $memoires = $stmt->fetchAll();
         #footer a:hover {
             text-decoration: underline;
         }
-        #contact {
-            background-color: white;
-            padding: 20px;
-            margin: 20px auto;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            max-width: 600px;
-        }
-        #contact h2 {
-            margin-top: 0;
-            color: #343a40;
-        }
-        #contact form {
-            display: flex;
-            flex-direction: column;
-        }
-        #contact label {
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        #contact input[type="text"],
-        #contact input[type="email"],
-        #contact textarea {
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 3px;
-            font-size: 16px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        #contact button {
-            padding: 10px 20px;
-            background-color: #343a40;
-            color: white;
-            border: none;
-            border-radius: 3px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        #contact button:hover {
-            background-color: #495057;
-        }
+     
     </style>
     <script>
         function highlightActiveLink() {
@@ -210,7 +167,6 @@ $memoires = $stmt->fetchAll();
         <a href="#publication">Publication</a>
         <a href="#categories">Catégories</a>
         <a href="#new">Nouveau</a>
-        <a href="#contact">Contact</a>
     </nav>
     <form method="get" action="">
         <input type="text" name="search" placeholder="Rechercher sur le site">
@@ -282,27 +238,9 @@ $memoires = $stmt->fetchAll();
 </section>
 </div>
 
-<!--
 <div id="footer">
-    <p>Ce site Web utilise des cookies pour vous garantir la meilleure expérience sur notre site Web. Apprendre encore plus <a href="#contact">Contact</a></p>
+    <p>© MemoPublish 2023-2024 - Pour tout problème de consultation ou si vous voulez publier un mémoire: <a href="memopublish@gmail.com">memopublish@gmail.com</a></p>
 </div>
--->
-
-<section id="contact">
-    <h2>Contactez-nous</h2>
-    <form>
-        <label for="name">Nom:</label>
-        <input type="text" id="name" name="name" required>
-        <br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <br>
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" rows="4" required></textarea>
-        <br>
-        <button type="submit">Envoyer</button>
-    </form>
-</section>
 
 </body>
 </html>
