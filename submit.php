@@ -33,6 +33,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Publier un mémoire sur MemoireOnline</title>
     <link rel="stylesheet" href="styles.css">
     <script src="scripts.js" defer></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <style>
 body {
@@ -145,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 <body>
     <div class="container">
-        <h1>Publier un mémoire sur MemoPublish</h1>
+        <h2>Publier un mémoire sur MemoPublish</h2>
         <form action="submit.php" method="post" enctype="multipart/form-data" id="memoireForm">
             <label for="titre">Titre du mémoire :</label>
             <input type="text" name="titre" id="titre" required><br><br>
