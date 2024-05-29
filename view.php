@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>MemoPublish</title>
+         <link rel="stylesheet" href="css/bootstrap.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
    <style>
         body {
@@ -177,6 +180,7 @@
     }
     ?>
     <div>
+        <a href="index.php"> Retour</a>
         <button onclick="onPrevPage()">Page Précédente</button>
         <button onclick="onNextPage()">Page Suivante</button>
         <span>Page: <span id="page_num"></span> / <span id="page_count"></span></span>

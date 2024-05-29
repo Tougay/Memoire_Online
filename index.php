@@ -25,18 +25,19 @@ $memoires = $stmt->fetchAll();
     <title>MemoPublish</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7f6;
             margin: 0;
             padding: 0;
         }
         #header {
-            background-color: #343a40;
+            background-color: #003366;
             color: white;
             padding: 15px 10px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         #header img {
             height: 50px;
@@ -44,6 +45,7 @@ $memoires = $stmt->fetchAll();
         #header h1 {
             font-size: 24px;
             margin: 0 10px;
+            letter-spacing: 1px;
         }
         #header nav {
             display: flex;
@@ -53,12 +55,12 @@ $memoires = $stmt->fetchAll();
             color: white;
             text-decoration: none;
             margin: 0 10px;
-            padding: 5px 10px;
+            padding: 8px 16px;
             border-radius: 3px;
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
         #header nav a:hover {
-            background-color: #495057;
+            background-color: #00509e;
             transform: scale(1.1);
         }
         #header form {
@@ -69,43 +71,63 @@ $memoires = $stmt->fetchAll();
             padding: 5px;
             font-size: 14px;
             margin-right: 10px;
+            border: none;
+            border-radius: 3px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         #header button {
-            padding: 5px 10px;
+            padding: 8px 16px;
             font-size: 14px;
+            border: none;
+            border-radius: 3px;
+            background-color: #00509e;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #header button:hover {
+            background-color: #007bff;
         }
         #main {
-            padding: 20px;
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
         #publication, #categories, #new {
             background-color: white;
-            padding: 20px;
+            padding: 30px;
             margin-bottom: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        #publication h2, #categories h2, #new h2 {
+            margin-top: 0;
+            color: #003366;
         }
         #categories a {
             display: block;
             padding: 15px 20px;
             text-decoration: none;
             color: #333;
-            border-radius: 5px; 
-            font-size: 25px; 
-            margin-bottom: 10px; 
-            transition: background-color 0.3s ease, transform 0.3s ease; 
+            border-radius: 5px;
+            font-size: 18px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
         #categories a:hover {
-            background-color: #ddd;
-            transform: scale(1.05); 
+            color: white;
+            background-color: #003366;
+            transform: scale(1.05);
         }
         #categories a.active {
             font-weight: bold;
             color: white;
-            background-color: #343a40;
+            background-color: #003366;
         }
         #new table {
             width: 100%;
             border-collapse: collapse;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
         }
         #new th, #new td {
             border: 1px solid #ddd;
@@ -113,15 +135,17 @@ $memoires = $stmt->fetchAll();
             text-align: left;
         }
         #new th {
-            background-color: #343a40;
+            background-color: #003366;
             color: white;
         }
         #footer {
             text-align: center;
-            padding: 10px;
-            background-color: #343a40;
+            padding: 20px;
+            background-color: #003366;
             color: white;
             position: relative;
+            margin-top: 40px;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
         }
         #footer a {
             color: #17a2b8;
@@ -129,50 +153,6 @@ $memoires = $stmt->fetchAll();
         }
         #footer a:hover {
             text-decoration: underline;
-        }
-        #contact {
-            background-color: white;
-            padding: 20px;
-            margin: 20px auto;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            max-width: 600px;
-        }
-        #contact h2 {
-            margin-top: 0;
-            color: #343a40;
-        }
-        #contact form {
-            display: flex;
-            flex-direction: column;
-        }
-        #contact label {
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        #contact input[type="text"],
-        #contact input[type="email"],
-        #contact textarea {
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 3px;
-            font-size: 16px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        #contact button {
-            padding: 10px 20px;
-            background-color: #343a40;
-            color: white;
-            border: none;
-            border-radius: 3px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        #contact button:hover {
-            background-color: #495057;
         }
     </style>
     <script>
@@ -187,7 +167,7 @@ $memoires = $stmt->fetchAll();
         function smoothScroll(event) {
             event.preventDefault();
             var targetId = event.currentTarget.getAttribute("href");
-            var targetPosition = document.querySelector(targetId).offsetTop;
+            var targetPosition = document.querySelector(targetId).offsetTop - 60; // Adjusted for header height
             window.scrollTo({
                 top: targetPosition,
                 behavior: "smooth"
@@ -201,6 +181,8 @@ $memoires = $stmt->fetchAll();
             });
         };
     </script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 <div id="header">
@@ -210,7 +192,6 @@ $memoires = $stmt->fetchAll();
         <a href="#publication">Publication</a>
         <a href="#categories">Catégories</a>
         <a href="#new">Nouveau</a>
-        <a href="#contact">Contact</a>
     </nav>
     <form method="get" action="">
         <input type="text" name="search" placeholder="Rechercher sur le site">
@@ -253,56 +234,38 @@ $memoires = $stmt->fetchAll();
         </table>
     </section>
 
-   <section id="new">
-    <h2>NOUVEAU</h2>
-    <table>
-        <tr>
-            <th>Titre</th>
-            <th>Auteur</th>
-            <th>Université</th>
-            <th>Année</th>
-            <th>Domaine</th>
-            <th>Voir</th>
-            <th>Télécharger</th>
-        </tr>
-        <?php foreach ($memoires as $memoire): ?>
+    <section id="new">
+        <h2>NOUVEAU</h2>
+        <table>
             <tr>
-                <td><?php echo htmlspecialchars($memoire['titre']); ?></td>
-                <td><?php echo htmlspecialchars($memoire['auteur']); ?></td>
-                <td><?php echo htmlspecialchars($memoire['universite']); ?></td>
-                <td><?php echo htmlspecialchars($memoire['annee']); ?></td>
-                <td><?php echo htmlspecialchars($memoire['domaine']); ?></td>
-                <!-- Lien pour voir le mémoire -->
-                <td><a href="view.php?id=<?php echo $memoire['id']; ?>" target="_blank">Voir</a></td>
-                <!-- Lien pour télécharger le mémoire -->
-                <td><a href="uploads/<?php echo htmlspecialchars($memoire['fichier']); ?>" download>Télécharger</a></td>
+                <th>Titre</th>
+                <th>Auteur</th>
+                <th>Université</th>
+                <th>Année</th>
+                <th>Domaine</th>
+                <th>Voir</th>
+                <th>Télécharger</th>
             </tr>
-        <?php endforeach; ?>
-    </table>
-</section>
+            <?php foreach ($memoires as $memoire): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($memoire['titre']); ?></td>
+                    <td><?php echo htmlspecialchars($memoire['auteur']); ?></td>
+                    <td><?php echo htmlspecialchars($memoire['universite']); ?></td>
+                    <td><?php echo htmlspecialchars($memoire['annee']); ?></td>
+                    <td><?php echo htmlspecialchars($memoire['domaine']); ?></td>
+                    <!-- Lien pour voir le mémoire -->
+                    <td><a href="view.php?id=<?php echo $memoire['id']; ?>" target="_blank">Voir</a></td>
+                    <!-- Lien pour télécharger le mémoire -->
+                    <td><a href="uploads/<?php echo htmlspecialchars($memoire['fichier']); ?>" download>Télécharger</a></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </section>
 </div>
 
-<!--
 <div id="footer">
-    <p>Ce site Web utilise des cookies pour vous garantir la meilleure expérience sur notre site Web. Apprendre encore plus <a href="#contact">Contact</a></p>
+    <p>© MemoPublish 2023-2024 - Pour tout problème de consultation ou si vous voulez publier un mémoire: <a href="mailto:memopublish@gmail.com">memopublish@gmail.com</a></p>
 </div>
--->
-
-<section id="contact">
-    <h2>Contactez-nous</h2>
-    <form>
-        <label for="name">Nom:</label>
-        <input type="text" id="name" name="name" required>
-        <br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <br>
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" rows="4" required></textarea>
-        <br>
-        <button type="submit">Envoyer</button>
-    </form>
-</section>
 
 </body>
 </html>

@@ -1,0 +1,35 @@
+<?php
+require_once ('config.php');
+
+
+$id = $_GET['edit'];
+$sql = "SELECT * FROM memoires WHERE id='$id'";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$memoires = $stmt->fetchAll();
+
+if (isset($_POST['modifier'])) {
+    
+    $id = $_GET['edit'];
+    
+    $titre = $_POST['titre'];
+    $auteur = $_POST['auteur'];
+    $universite = $_POST['universite'];
+    $annee = $_POST['annee'];
+    $domaine = $_POST['domaine'];
+    $fichier = $_FILES['fichier']['name'];
+
+    $target_dir = "uploads/";
+    $target_file = $target_dir . basename($fichier);
+    
+    $sql2 = "UPDATE `memoires` SET  `titre`=:titre,`auteur`=:auteur,`universite`=:universite,`annee`=:annee,`fichier`=:fichier,`domaine`=:domaine WHERE  id='$id'";
+    
+    $stmt = $pdo->prepare($sql);
+    if($stmt){
+        header("location: index1.php");
+    }else{
+        $erreur = "la mise a jour a échoué.";
+    }
+  }
+
+?>
