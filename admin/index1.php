@@ -17,15 +17,12 @@ if ($domaine_filter) {
 }
 $memoires = $stmt->fetchAll();
 
-
-if(isset($_GET['sup'])){
+if (isset($_GET['sup'])) {
     $id = $_GET['sup'];
-    $sql2= "DELETE FROM `memoires` WHERE id='$id'";
+    $sql2 = "DELETE FROM `memoires` WHERE id='$id'";
     $stmt = $pdo->prepare($sql2);
     $stmt->execute();
-    
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -33,10 +30,10 @@ if(isset($_GET['sup'])){
 <head>
     <meta charset="UTF-8">
     <title>MemoPublish</title>
-      <link rel="stylesheet" href="css/bootstrap.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
- <style>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+   <style>
         body {
             font-family: 'Roboto', sans-serif;
             background-color: #f4f7f6;
@@ -150,6 +147,9 @@ if(isset($_GET['sup'])){
             background-color: #003366;
             color: white;
         }
+        .action-buttons a {
+            margin-right: 10px;
+        }
         #footer {
             text-align: center;
             padding: 20px;
@@ -216,47 +216,47 @@ if(isset($_GET['sup'])){
         <p>Envoyez votre mémoire rapidement et sans inscription en <a href="submit.php">cliquant ici</a></p>
     </section>
 
-   <section id="new">
-    <h2>NOUVEAU</h2>
-    <table>
-        <tr>
-            <th>Titre</th>
-            <th>Auteur</th>
-            <th>Université</th>
-            <th>Année</th>
-            <th>Domaine</th>
-            <th>Voir</th>
-            <th>Télécharger</th>
-            <th>Action</th>
-        </tr>
-        <?php foreach ($memoires as $memoire): ?>
+    <section id="new">
+        <h2>NOUVEAU</h2>
+        <table>
             <tr>
-                <td><?php echo htmlspecialchars($memoire['titre']); ?></td>
-                <td><?php echo htmlspecialchars($memoire['auteur']); ?></td>
-                <td><?php echo htmlspecialchars($memoire['universite']); ?></td>
-                <td><?php echo htmlspecialchars($memoire['annee']); ?></td>
-                <td><?php echo htmlspecialchars($memoire['domaine']); ?></td>
-                <!-- Lien pour voir le mémoire -->
-                <td><a href="view.php?id=<?php echo $memoire['id']; ?>" target="_blank">Voir</a></td>
-                <!-- Lien pour télécharger le mémoire -->
-                <td><a href="uploads/<?php echo htmlspecialchars($memoire['fichier']); ?>" download>Télécharger</a></td>
-                <td><a href="index1.php?sup=<?php echo $memoire['id']; ?> " class="btn btn-danger" >Suprimer</a>
-                 <a href="update.php?edit=<?php echo $memoire['id']; ?> " class="btn btn-success">update</a></td>
-             
+                <th>Titre</th>
+                <th>Auteur</th>
+                <th>Université</th>
+                <th>Année</th>
+                <th>Domaine</th>
+                <th>Voir</th>
+                <th>Télécharger</th>
+                <th>Action</th>
             </tr>
-              
-        <?php endforeach; ?>
-    </table>
-</section>
+            <?php foreach ($memoires as $memoire): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($memoire['titre']); ?></td>
+                    <td><?php echo htmlspecialchars($memoire['auteur']); ?></td>
+                    <td><?php echo htmlspecialchars($memoire['universite']); ?></td>
+                    <td><?php echo htmlspecialchars($memoire['annee']); ?></td>
+                    <td><?php echo htmlspecialchars($memoire['domaine']); ?></td>
+                    <!-- Lien pour voir le mémoire -->
+                    <td><a href="view.php?id=<?php echo $memoire['id']; ?>" target="_blank">Voir</a></td>
+                    <!-- Lien pour télécharger le mémoire -->
+                    <td><a href="uploads/<?php echo htmlspecialchars($memoire['fichier']); ?>" download>Télécharger</a></td>
+                    <td>
+                        <a href="index1.php?sup=<?php echo $memoire['id']; ?>" class="btn btn-danger">Supprimer</a>
+                        <a href="update.php?edit=<?php echo $memoire['id']; ?>" class="btn btn-success">Mettre à jour</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </section>
 </div>
 
-</body>
 <div id="footer">
     <p>© MemoPublish 2023-2024 - Pour tout problème de consultation ou si vous voulez publier un mémoire: <a href="mailto:memopublish@gmail.com">memopublish@gmail.com</a></p>
 </div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
-  <script src="js/bootstrap.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+<script src="js/bootstrap.js"></script>
 <script src="js/Jquery.js"></script>
+</body>
 </html>
