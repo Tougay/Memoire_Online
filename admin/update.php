@@ -29,7 +29,7 @@ if (isset($_POST['modifier'])) {
      $stmt2 ->bindParam(":annee",$annee); 
      $stmt2 ->bindParam(":domaine",$domaine); 
      $stmt2 ->bindParam(":fichier",$fichier); 
-     $stmt2->execute();header("location:index1.php");
+     $stmt2->execute();header("location:acueil.php");
 }
 ?>
  <style>
@@ -230,7 +230,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <label for="fichier">Fichier à publier :</label>
             <input type="file" name="fichier" id="fichier" required value="<?php echo $memoire['fichier'] ?> "><br><br>
 
-            <button type="submit" name="modifier">Modifier</button>
+            <button type="submit" name="modifier" class="btn btn-success">Modifier</button>
             
         </form>
     <?php } ?>

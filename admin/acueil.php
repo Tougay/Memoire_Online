@@ -231,24 +231,50 @@ if (isset($_GET['sup'])) {
             </tr>
             <?php foreach ($memoires as $memoire): ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($memoire['titre']); ?></td>
-                    <td><?php echo htmlspecialchars($memoire['auteur']); ?></td>
-                    <td><?php echo htmlspecialchars($memoire['universite']); ?></td>
-                    <td><?php echo htmlspecialchars($memoire['annee']); ?></td>
-                    <td><?php echo htmlspecialchars($memoire['domaine']); ?></td>
-                    <!-- Lien pour voir le mémoire -->
-                    <td><a href="view.php?id=<?php echo $memoire['id']; ?>" target="_blank">Voir</a></td>
-                    <!-- Lien pour télécharger le mémoire -->
-                    <td><a href="uploads/<?php echo htmlspecialchars($memoire['fichier']); ?>" download>Télécharger</a></td>
-                    <td>
-                        <a href="index1.php?sup=<?php echo $memoire['id']; ?>" class="btn btn-danger">Supprimer</a>
-                        <a href="update.php?edit=<?php echo $memoire['id']; ?>" class="btn btn-success">Mettre à jour</a>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </table>
-    </section>
-</div>
+                <td><?php echo htmlspecialchars($memoire['titre']); ?></td>
+                <td><?php echo htmlspecialchars($memoire['auteur']); ?></td>
+                <td><?php echo htmlspecialchars($memoire['universite']); ?></td>
+                <td><?php echo htmlspecialchars($memoire['annee']); ?></td>
+                <td><?php echo htmlspecialchars($memoire['domaine']); ?></td>
+                <!-- Lien pour voir le mémoire -->
+                <td><a href="view.php?id=<?php echo $memoire['id']; ?>" target="_blank">Voir</a></td>
+                <!-- Lien pour télécharger le mémoire -->
+                <td><a href="uploads/<?php echo htmlspecialchars($memoire['fichier']); ?>" download>Télécharger</a></td>
+                 <td>
+            <a href="update.php?edit=<?php echo $memoire['id']; ?>" class="m-2">
+              <i class="fa fa-edit fa-1x"></i>
+            </a>
+            <i class="fa fa-trash fa-1x red-icon"
+             data-bs-toggle="modal"
+             data-bs-target="#exampleModal<?php echo $memoire['id']; ?>" class="m-2">
+             
+             </i>
+
+             <div class="modal fade" id="exampleModal<?php echo $memoire['id']; ?>" role="dialog">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-body">
+                    <p>Etes vous sur de vouloir supprimer?</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary"
+                    data-bs-dismiss="modal">Annuler</button>
+                    <a href="acueil.php?sup=<?php echo $memoire['id']; ?>">
+                      <button class="btn btn-danger" type="button">Confirmer</button>
+                    </a>
+                  </div>
+                </div>
+              </div>
+             </div>
+          </td>
+            </tr>
+            
+              
+        <?php endforeach; ?>
+    </table>
+</section>
+    </div>
+               
 
 <div id="footer">
     <p>© MemoPublish 2023-2024 - Pour tout problème de consultation ou si vous voulez publier un mémoire: <a href="mailto:memopublish@gmail.com">memopublish@gmail.com</a></p>

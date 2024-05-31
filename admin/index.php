@@ -24,7 +24,7 @@
 
         if ($result->num_rows > 0) {
     
-            header("Location: index1.php");
+            header("Location: acueil.php");
         } else {
             echo "<script>alert('E-mail ou mot de passe invalide');</script>";
         }

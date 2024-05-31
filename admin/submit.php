@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->execute([$titre, $auteur, $universite, $annee, $domaine, $fichier]);
         echo "Mémoire soumis avec succès.";
         // Redirection vers la page principale après soumission réussie
-        header("Location: index1.php");
+        header("Location: acueil.php");
         exit();
     } else {
         echo "Désolé, une erreur s'est produite lors du téléchargement de votre fichier.";
@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', function () {
     </div>
     <footer>
         <p>Si vous rencontrez des difficultés pour utiliser ce formulaire, n'hésitez pas à prendre contact avec le <a href="memopublish@gmail.com">webmaster</a>.</p>
-        <p><a href="index1.php">Retour page d'accueil</a></p>
+        <p><a href="acueil.php">Retour page d'accueil</a></p>
     </footer>   
 </body>
 </html>

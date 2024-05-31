@@ -177,7 +177,7 @@
     }
     ?>
     <div>
-       <a href="index1.php"> Retour</a>
+       <a href="acueil.php"> Retour</a>
         <button onclick="onPrevPage()">Page Précédente</button>
         <button onclick="onNextPage()">Page Suivante</button>
         <span>Page: <span id="page_num"></span> / <span id="page_count"></span></span>
