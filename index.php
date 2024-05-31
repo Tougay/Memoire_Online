@@ -22,7 +22,7 @@ $memoires = $stmt->fetchAll();
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>MemoPublish</title>
+    <title>DépotMemo</title>
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -197,7 +197,7 @@ $memoires = $stmt->fetchAll();
 <body>
 <div id="header">
     <img src="5570061.jpg" alt="Mémoire Online Logo" width="200" height="50">
-    <h1>MemoPublish</h1>
+    <h1>DépotMemo</h1>
     <nav>
         <a href="#publication">Publication</a>
         <a href="#categories">Catégories</a>
@@ -273,7 +273,7 @@ $memoires = $stmt->fetchAll();
     </section>
 </div>
   <div id="footer">
-        <p>© MemoPublish 2023-2024 - Pour tout problème de consultation ou si vous voulez publier un mémoire: <a href="mailto:memopublish@gmail.com">memopublish@gmail.com</a></p>
+        <p>© DépotMemo 2023-2024 - Pour tout problème de consultation ou si vous voulez publier un mémoire: <a href="mailto:depotmemo@gmail.com">depotmemo@gmail.com</a></p>
     </div>
 
 

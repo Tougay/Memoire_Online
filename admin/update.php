@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </head>
 <body>
  <div class="container">
-        <h1>Publier un mémoire sur MemoPublish</h1>
+        <h1>Publier un mémoire sur DépotMemo</h1>
         
         
     
@@ -243,6 +243,6 @@ document.addEventListener('DOMContentLoaded', function () {
 <script src="js/Jquery.js"></script>
 </body>
 <div id="footer">
-    <p>© MemoPublish 2023-2024 - Pour tout problème de consultation ou si vous voulez publier un mémoire: <a href="mailto:memopublish@gmail.com">memopublish@gmail.com</a></p>
+    <p>© DépotMemo 2023-2024 - Pour tout problème de consultation ou si vous voulez publier un mémoire: <a href="mailto:depotmemo@gmail.com">depotmemo@gmail.com</a></p>
 </div>
 </html>

@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Publier un mémoire sur MemoireOnline</title>
+    <title>Publier un mémoire sur DépotMemo</title>
     <link rel="stylesheet" href="styles.css">
     <script src="scripts.js" defer></script>
 </head>
@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 <body>
     <div class="container">
-        <h1>Publier un mémoire sur MemoPublish</h1>
+        <h1>Publier un mémoire sur DépotMemo</h1>
         <form action="submit.php" method="post" enctype="multipart/form-data" id="memoireForm">
             <label for="titre">Titre du mémoire :</label>
             <input type="text" name="titre" id="titre" required><br><br>
@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function () {
         </form>
     </div>
     <footer>
-        <p>Si vous rencontrez des difficultés pour utiliser ce formulaire, n'hésitez pas à prendre contact avec le <a href="memopublish@gmail.com">webmaster</a>.</p>
+        <p>Si vous rencontrez des difficultés pour utiliser ce formulaire, n'hésitez pas à prendre contact avec le <a href="mailto:depotmemo@gmail.com">webmaster</a>.</p>
         <p><a href="acueil.php">Retour page d'accueil</a></p>
     </footer>   
 </body>

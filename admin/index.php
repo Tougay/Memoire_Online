@@ -116,7 +116,7 @@
 </head>
 <body>
 	 <div class="header">
-        <h1>Bienvenue sur MemoPublish</h1>
+        <h1>Bienvenue sur DépotMemo</h1>
     </div>
     
 
