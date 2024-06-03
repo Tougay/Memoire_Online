@@ -34,6 +34,7 @@ $memoires = $stmt->fetchAll();
 <head>
     <meta charset="UTF-8">
     <title>DépotMemo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -46,6 +47,7 @@ $memoires = $stmt->fetchAll();
             color: white;
             padding: 15px 10px;
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -61,6 +63,7 @@ $memoires = $stmt->fetchAll();
         #header nav {
             display: flex;
             align-items: center;
+            flex-wrap: wrap;
         }
         #header nav a {
             color: white;
@@ -175,59 +178,19 @@ $memoires = $stmt->fetchAll();
         #footer a:hover {
             text-decoration: underline;
         }
+        @media (max-width: 768px) {
+            #header h1 {
+                font-size: 20px;
+            }
+            #header nav a {
+                margin: 5px 0;
+                padding: 5px 10px;
+            }
+            #main {
+                padding: 20px;
+            }
+        }
     </style>
-    <script>
-        // Highlight active link
-        function highlightActiveLink() {
-            var links = document.querySelectorAll('#categories a');
-            links.forEach(function(link) {
-                if (link.href === window.location.href) {
-                    link.classList.add('active');
-                }
-            });
-        }
-
-        // Smooth scroll
-        function smoothScroll(event) {
-            event.preventDefault();
-            var targetId = event.currentTarget.getAttribute("href");
-            var targetPosition = document.querySelector(targetId).offsetTop - 60; // Adjusted for header height
-            window.scrollTo({
-                top: targetPosition,
-                behavior: "smooth"
-            });
-        }
-
-        // Display memoires
-        function displayMemoires(memoires) {
-            const tableBody = document.getElementById('memoiresTableBody');
-            tableBody.innerHTML = '';
-            memoires.forEach(memoire => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${memoire.titre}</td>
-                    <td>${memoire.auteur}</td>
-                    <td>${memoire.universite}</td>
-                    <td>${memoire.annee}</td>
-                    <td>${memoire.domaine}</td>
-                    <td><a href="view.php?id=${memoire.id}" target="_blank">Voir</a></td>
-                    <td><a href="uploads/${memoire.fichier}" download>Télécharger</a></td>
-                `;
-                tableBody.appendChild(row);
-            });
-        }
-
-        window.onload = function() {
-            highlightActiveLink();
-            var navLinks = document.querySelectorAll('#header nav a');
-            navLinks.forEach(function(link) {
-                link.addEventListener('click', smoothScroll);
-            });
-            displayMemoires(<?php echo json_encode($memoires, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>);
-        };
-    </script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 <div id="header">
@@ -252,56 +215,107 @@ $memoires = $stmt->fetchAll();
 
     <section id="categories">
         <h2>Catégories</h2>
-        <table>
-            <tr>
-                <td>
-                    <a href="index.php?domaine=Arts, Philosophie et Sociologie">Arts, Philosophie et Sociologie</a>
-                    <a href="index.php?domaine=Communication et Journalisme">Communication et Journalisme</a>
-                    <a href="index.php?domaine=Enseignement">Enseignement</a>
-                    <a href="index.php?domaine=Informatique et Télécommunications">Informatique et Télécommunications</a>
-                    <a href="index.php?domaine=Sport">Sport</a>
-                </td>
-                <td>
-                    <a href="index.php?domaine=Biologie et Médecine">Biologie et Médecine</a>
-                    <a href="index.php?domaine=Droit et Sciences Politiques">Droit et Sciences Politiques</a>
-                    <a href="index.php?domaine=Géographie">Géographie</a>
-                    <a href="index.php?domaine=Ressources humaines">Ressources humaines</a>
-                    <a href="index.php?domaine=Tourisme">Tourisme</a>
-                </td>
-                <td>
-                    <a href="index.php?domaine=Commerce et Marketing">Commerce et Marketing</a>
-                    <a href="index.php?domaine=Économie et Finance">Économie et Finance</a>
-                    <a href="index.php?domaine=Histoire">Histoire</a>
-                    <a href="index.php?domaine=Sciences">Sciences</a>
-                    <a href="index.php?domaine=Rapports de stage">Rapports de stage</a>
-                </td>
-            </tr>
-        </table>
+        <div class="row">
+            <div class="col-md-4">
+                <a href="index.php?domaine=Arts, Philosophie et Sociologie">Arts, Philosophie et Sociologie</a>
+                <a href="index.php?domaine=Communication et Journalisme">Communication et Journalisme</a>
+                <a href="index.php?domaine=Enseignement">Enseignement</a>
+                <a href="index.php?domaine=Informatique et Télécommunications">Informatique et Télécommunications</a>
+                <a href="index.php?domaine=Sport">Sport</a>
+            </div>
+            <div class="col-md-4">
+                <a href="index.php?domaine=Biologie et Médecine">Biologie et Médecine</a>
+                <a href="index.php?domaine=Droit et Sciences Politiques">Droit et Sciences Politiques</a>
+                <a href="index.php?domaine=Géographie">Géographie</a>
+                <a href="index.php?domaine=Ressources humaines">Ressources humaines</a>
+                <a href="index.php?domaine=Tourisme">Tourisme</a>
+            </div>
+            <div class="col-md-4">
+                <a href="index.php?domaine=Commerce et Marketing">Commerce et Marketing</a>
+                <a href="index.php?domaine=Économie et Finance">Économie et Finance</a>
+                <a href="index.php?domaine=Histoire">Histoire</a>
+                <a href="index.php?domaine=Sciences">Sciences</a>
+                <a href="index.php?domaine=Rapports de stage">Rapports de stage</a>
+            </div>
+        </div>
     </section>
 
     <section id="new">
         <h2>NOUVEAU</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Titre</th>
-                    <th>Auteur</th>
-                    <th>Université</th>
-                    <th>Année</th>
-                    <th>Domaine</th>
-                    <th>Voir</th>
-                    <th>Télécharger</th>
-                </tr>
-            </thead>
-            <tbody id="memoiresTableBody">
-                <!-- Les mémoires seront insérés ici par JavaScript -->
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Auteur</th>
+                        <th>Université</th>
+                        <th>Année</th>
+                        <th>Domaine</th>
+                        <th>Voir</th>
+                        <th>Télécharger</th>
+                    </tr>
+                </thead>
+                <tbody id="memoiresTableBody">
+                    <!-- Les mémoires seront insérés ici par JavaScript -->
+                </tbody>
+            </table>
+        </div>
     </section>
 </div>
 <div id="footer">
     <p>© DépotMemo 2023-2024 - Pour tout problème de consultation ou si vous voulez publier un mémoire: <a href="mailto:depotmemo@gmail.com">depotmemo@gmail.com</a></p>
 </div>
 
+<script>
+    // Highlight active link
+    function highlightActiveLink() {
+        var links = document.querySelectorAll('#categories a');
+        links.forEach(function(link) {
+            if (link.href === window.location.href) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    // Smooth scroll
+    function smoothScroll(event) {
+        event.preventDefault();
+        var targetId = event.currentTarget.getAttribute("href");
+        var targetPosition = document.querySelector(targetId).offsetTop - 60; // Adjusted for header height
+        window.scrollTo({
+            top: targetPosition,
+            behavior: "smooth"
+        });
+    }
+
+    // Display memoires
+    function displayMemoires(memoires) {
+        const tableBody = document.getElementById('memoiresTableBody');
+        tableBody.innerHTML = '';
+        memoires.forEach(memoire => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${memoire.titre}</td>
+                <td>${memoire.auteur}</td>
+                <td>${memoire.universite}</td>
+                <td>${memoire.annee}</td>
+                <td>${memoire.domaine}</td>
+                <td><a href="view.php?id=${memoire.id}" target="_blank">Voir</a></td>
+                <td><a href="uploads/${memoire.fichier}" download>Télécharger</a></td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+
+    window.onload = function() {
+        highlightActiveLink();
+        var navLinks = document.querySelectorAll('#header nav a');
+        navLinks.forEach(function(link) {
+            link.addEventListener('click', smoothScroll);
+        });
+        displayMemoires(<?php echo json_encode($memoires, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>);
+    };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
