@@ -1,40 +1,51 @@
+
 <?php
 include 'config.php';
+// Traitement de la suppression
+if (isset($_GET['sup'])) {
+    $id = $_GET['sup'];
+    $deleteStmt = $pdo->prepare("DELETE FROM memoires WHERE id = ?");
+    $deleteStmt->execute([$id]);
+    header("Location: acueil.php"); // Redirection après suppression
+    exit();
+}
 
 $domaine_filter = isset($_GET['domaine']) ? $_GET['domaine'] : '';
+$search_filter = isset($_GET['search']) ? $_GET['search'] : '';
 
 $sql = "SELECT * FROM memoires";
+$conditions = [];
+$params = [];
+
 if ($domaine_filter) {
-    $sql .= " WHERE domaine = ?";
+    $conditions[] = "domaine = ?";
+    $params[] = $domaine_filter;
 }
+
+if ($search_filter) {
+    $conditions[] = "titre LIKE ?";
+    $params[] = "%" . $search_filter . "%";
+}
+
+if (!empty($conditions)) {
+    $sql .= " WHERE " . implode(" AND ", $conditions);
+}
+
 $sql .= " ORDER BY annee DESC";
 
 $stmt = $pdo->prepare($sql);
-if ($domaine_filter) {
-    $stmt->execute([$domaine_filter]);
-} else {
-    $stmt->execute();
-}
+$stmt->execute($params);
 $memoires = $stmt->fetchAll();
-
-if (isset($_GET['sup'])) {
-    $id = $_GET['sup'];
-    $sql2 = "DELETE FROM `memoires` WHERE id='$id'";
-    $stmt = $pdo->prepare($sql2);
-    $stmt->execute();
-}
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>MemoPublish</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-   <style>
-        body {
+    <title>DépotMemo</title>
+    <style>
+      
+       body {
             font-family: 'Roboto', sans-serif;
             background-color: #f4f7f6;
             margin: 0;
@@ -125,7 +136,8 @@ if (isset($_GET['sup'])) {
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
         #categories a:hover {
-            background-color: #f0f0f0;
+            color: white;
+            background-color: #003366;
             transform: scale(1.05);
         }
         #categories a.active {
@@ -147,9 +159,25 @@ if (isset($_GET['sup'])) {
             background-color: #003366;
             color: white;
         }
-        .action-buttons a {
-            margin-right: 10px;
+		  .action-buttons a, .action-buttons button {
+            padding: 5px 10px;
+            font-size: 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+			margin: 5px;
+            transition: background-color 0.3s ease;
         }
+        /* CSS Reset for footer */
+        footer, #footer {
+            display: block;
+            margin-block-start: 1em;
+            margin-block-end: 1em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            padding: 0;
+        }
+        
         #footer {
             text-align: center;
             padding: 20px;
@@ -167,7 +195,8 @@ if (isset($_GET['sup'])) {
             text-decoration: underline;
         }
     </style>
-    <script>
+     <script>
+        // Highlight active link
         function highlightActiveLink() {
             var links = document.querySelectorAll('#categories a');
             links.forEach(function(link) {
@@ -176,23 +205,60 @@ if (isset($_GET['sup'])) {
                 }
             });
         }
+
+        // Smooth scroll
         function smoothScroll(event) {
             event.preventDefault();
             var targetId = event.currentTarget.getAttribute("href");
-            var targetPosition = document.querySelector(targetId).offsetTop;
+            var targetPosition = document.querySelector(targetId).offsetTop - 60; // Adjusted for header height
             window.scrollTo({
                 top: targetPosition,
                 behavior: "smooth"
             });
         }
+
+        // Display memoires
+        function displayMemoires(memoires) {
+            const tableBody = document.getElementById('memoiresTableBody');
+            tableBody.innerHTML = '';
+            memoires.forEach(memoire => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${memoire.titre}</td>
+                    <td>${memoire.auteur}</td>
+                    <td>${memoire.universite}</td>
+                    <td>${memoire.annee}</td>
+                    <td>${memoire.domaine}</td>
+                    <td><a href="view.php?id=${memoire.id}" target="_blank">Voir</a></td>
+                    <td><a href="uploads/${memoire.fichier}" download>Télécharger</a></td>
+                    <td class="action-buttons">
+                        <a href="update.php?edit=${memoire.id}" class="btn btn-primary">Modifier</a>
+                        <button class="btn btn-danger" data-id="${memoire.id}" onclick="confirmDelete(this)">Supprimer</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function confirmDelete(button) {
+            const id = button.getAttribute('data-id');
+            const confirmation = confirm('Êtes-vous sûr de vouloir supprimer ce mémoire?');
+            if (confirmation) {
+                window.location.href = `acueil.php?sup=${id}`;
+            }
+        }
+
         window.onload = function() {
             highlightActiveLink();
             var navLinks = document.querySelectorAll('#header nav a');
             navLinks.forEach(function(link) {
                 link.addEventListener('click', smoothScroll);
             });
+            displayMemoires(<?php echo json_encode($memoires, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>);
         };
     </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 <div id="header">
@@ -202,7 +268,6 @@ if (isset($_GET['sup'])) {
         <a href="#publication">Publication</a>
         <a href="#categories">Catégories</a>
         <a href="#new">Nouveau</a>
-        <a href="#contact">Contact</a>
     </nav>
     <form method="get" action="">
         <input type="text" name="search" placeholder="Rechercher sur le site">
@@ -216,73 +281,58 @@ if (isset($_GET['sup'])) {
         <p>Envoyez votre mémoire rapidement et sans inscription en <a href="submit.php">cliquant ici</a></p>
     </section>
 
-    <section id="new">
-        <h2>NOUVEAU</h2>
+    <section id="categories">
+        <h2>Catégories</h2>
         <table>
             <tr>
-                <th>Titre</th>
-                <th>Auteur</th>
-                <th>Université</th>
-                <th>Année</th>
-                <th>Domaine</th>
-                <th>Voir</th>
-                <th>Télécharger</th>
-                <th>Action</th>
+                <td>
+                    <a href="acueil.php">Arts, Philosophie et Sociologie</a>
+                    <a href="acueil.php?domaine=Communication et Journalisme">Communication et Journalisme</a>
+                    <a href="acueil.php?domaine=Enseignement">Enseignement</a>
+                    <a href="acueil.php?domaine=Informatique et Télécommunications">Informatique et Télécommunications</a>
+                    <a href="acueil.php?domaine=Sport">Sport</a>
+                </td>
+                <td>
+                    <a href="acueil.php?domaine=Biologie et Médecine">Biologie et Médecine</a>
+                    <a href="acueil.php?domaine=Droit et Sciences Politiques">Droit et Sciences Politiques</a>
+                    <a href="acueil.php?domaine=Géographie">Géographie</a>
+                    <a href="acueil.php?domaine=Ressources humaines">Ressources humaines</a>
+                    <a href="acueil.php?domaine=Tourisme">Tourisme</a>
+                </td>
+                <td>
+                    <a href="acueil.php?domaine=Commerce et Marketing">Commerce et Marketing</a>
+                    <a href="acueil.php?domaine=Économie et Finance">Économie et Finance</a>
+                    <a href="acueil.php?domaine=Histoire">Histoire</a>
+                    <a href="acueil.php?domaine=Sciences">Sciences</a>
+                    <a href="acueil.php?domaine=Rapports de stage">Rapports de stage</a>
+                </td>
             </tr>
-            <?php foreach ($memoires as $memoire): ?>
+        </table>
+    </section>
+
+    <section id="new">
+        <h2>NOUVEAU</h2>
+        <table >
+            <thead>
                 <tr>
-                <td><?php echo htmlspecialchars($memoire['titre']); ?></td>
-                <td><?php echo htmlspecialchars($memoire['auteur']); ?></td>
-                <td><?php echo htmlspecialchars($memoire['universite']); ?></td>
-                <td><?php echo htmlspecialchars($memoire['annee']); ?></td>
-                <td><?php echo htmlspecialchars($memoire['domaine']); ?></td>
-                <!-- Lien pour voir le mémoire -->
-                <td><a href="view.php?id=<?php echo $memoire['id']; ?>" target="_blank">Voir</a></td>
-                <!-- Lien pour télécharger le mémoire -->
-                <td><a href="uploads/<?php echo htmlspecialchars($memoire['fichier']); ?>" download>Télécharger</a></td>
-                 <td>
-            <a href="update.php?edit=<?php echo $memoire['id']; ?>" class="m-2">
-              <i class="fa fa-edit fa-1x"></i>
-            </a>
-            <i class="fa fa-trash fa-1x red-icon"
-             data-bs-toggle="modal"
-             data-bs-target="#exampleModal<?php echo $memoire['id']; ?>" class="m-2">
-             
-             </i>
-
-             <div class="modal fade" id="exampleModal<?php echo $memoire['id']; ?>" role="dialog">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-body">
-                    <p>Etes vous sur de vouloir supprimer?</p>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-primary"
-                    data-bs-dismiss="modal">Annuler</button>
-                    <a href="acueil.php?sup=<?php echo $memoire['id']; ?>">
-                      <button class="btn btn-danger" type="button">Confirmer</button>
-                    </a>
-                  </div>
-                </div>
-              </div>
-             </div>
-          </td>
-            </tr>
-            
-              
-        <?php endforeach; ?>
-    </table>
-</section>
-    </div>
-               
-
+                    <th>Titre</th>
+                    <th>Auteur</th>
+                    <th>Université</th>
+                    <th>Année</th>
+                    <th>Domaine</th>
+                    <th>Voir</th>
+                    <th>Télécharger</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="memoiresTableBody"></tbody>
+        </table>
+    </section>
+</div>
 <div id="footer">
     <p>© DépotMemo 2023-2024 - Pour tout problème de consultation ou si vous voulez publier un mémoire: <a href="mailto:depotmemo@gmail.com">depotmemo@gmail.com</a></p>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
-<script src="js/bootstrap.js"></script>
-<script src="js/Jquery.js"></script>
+
 </body>
 </html>
+

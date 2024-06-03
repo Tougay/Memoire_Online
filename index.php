@@ -2,19 +2,30 @@
 include 'config.php';
 
 $domaine_filter = isset($_GET['domaine']) ? $_GET['domaine'] : '';
+$search_filter = isset($_GET['search']) ? $_GET['search'] : '';
 
 $sql = "SELECT * FROM memoires";
+$conditions = [];
+$params = [];
+
 if ($domaine_filter) {
-    $sql .= " WHERE domaine = ?";
+    $conditions[] = "domaine = ?";
+    $params[] = $domaine_filter;
 }
+
+if ($search_filter) {
+    $conditions[] = "titre LIKE ?";
+    $params[] = "%" . $search_filter . "%";
+}
+
+if (!empty($conditions)) {
+    $sql .= " WHERE " . implode(" AND ", $conditions);
+}
+
 $sql .= " ORDER BY annee DESC";
 
 $stmt = $pdo->prepare($sql);
-if ($domaine_filter) {
-    $stmt->execute([$domaine_filter]);
-} else {
-    $stmt->execute();
-}
+$stmt->execute($params);
 $memoires = $stmt->fetchAll();
 ?>
 
@@ -166,6 +177,7 @@ $memoires = $stmt->fetchAll();
         }
     </style>
     <script>
+        // Highlight active link
         function highlightActiveLink() {
             var links = document.querySelectorAll('#categories a');
             links.forEach(function(link) {
@@ -174,6 +186,8 @@ $memoires = $stmt->fetchAll();
                 }
             });
         }
+
+        // Smooth scroll
         function smoothScroll(event) {
             event.preventDefault();
             var targetId = event.currentTarget.getAttribute("href");
@@ -183,12 +197,33 @@ $memoires = $stmt->fetchAll();
                 behavior: "smooth"
             });
         }
+
+        // Display memoires
+        function displayMemoires(memoires) {
+            const tableBody = document.getElementById('memoiresTableBody');
+            tableBody.innerHTML = '';
+            memoires.forEach(memoire => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${memoire.titre}</td>
+                    <td>${memoire.auteur}</td>
+                    <td>${memoire.universite}</td>
+                    <td>${memoire.annee}</td>
+                    <td>${memoire.domaine}</td>
+                    <td><a href="view.php?id=${memoire.id}" target="_blank">Voir</a></td>
+                    <td><a href="uploads/${memoire.fichier}" download>Télécharger</a></td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
         window.onload = function() {
             highlightActiveLink();
             var navLinks = document.querySelectorAll('#header nav a');
             navLinks.forEach(function(link) {
                 link.addEventListener('click', smoothScroll);
             });
+            displayMemoires(<?php echo json_encode($memoires, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>);
         };
     </script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
@@ -247,35 +282,26 @@ $memoires = $stmt->fetchAll();
     <section id="new">
         <h2>NOUVEAU</h2>
         <table>
-            <tr>
-                <th>Titre</th>
-                <th>Auteur</th>
-                <th>Université</th>
-                <th>Année</th>
-                <th>Domaine</th>
-                <th>Voir</th>
-                <th>Télécharger</th>
-            </tr>
-            <?php foreach ($memoires as $memoire): ?>
+            <thead>
                 <tr>
-                    <td><?php echo htmlspecialchars($memoire['titre']); ?></td>
-                    <td><?php echo htmlspecialchars($memoire['auteur']); ?></td>
-                    <td><?php echo htmlspecialchars($memoire['universite']); ?></td>
-                    <td><?php echo htmlspecialchars($memoire['annee']); ?></td>
-                    <td><?php echo htmlspecialchars($memoire['domaine']); ?></td>
-                    <!-- Lien pour voir le mémoire -->
-                    <td><a href="view.php?id=<?php echo $memoire['id']; ?>" target="_blank">Voir</a></td>
-                    <!-- Lien pour télécharger le mémoire -->
-                    <td><a href="uploads/<?php echo htmlspecialchars($memoire['fichier']); ?>" download>Télécharger</a></td>
+                    <th>Titre</th>
+                    <th>Auteur</th>
+                    <th>Université</th>
+                    <th>Année</th>
+                    <th>Domaine</th>
+                    <th>Voir</th>
+                    <th>Télécharger</th>
                 </tr>
-            <?php endforeach; ?>
+            </thead>
+            <tbody id="memoiresTableBody">
+                <!-- Les mémoires seront insérés ici par JavaScript -->
+            </tbody>
         </table>
     </section>
 </div>
-  <div id="footer">
-        <p>© DépotMemo 2023-2024 - Pour tout problème de consultation ou si vous voulez publier un mémoire: <a href="mailto:depotmemo@gmail.com">depotmemo@gmail.com</a></p>
-    </div>
-
+<div id="footer">
+    <p>© DépotMemo 2023-2024 - Pour tout problème de consultation ou si vous voulez publier un mémoire: <a href="mailto:depotmemo@gmail.com">depotmemo@gmail.com</a></p>
+</div>
 
 </body>
 </html>

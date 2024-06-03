@@ -2,22 +2,33 @@
 include 'config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $titre = $_POST['titre'];
-    $auteur = $_POST['auteur'];
-    $universite = $_POST['universite'];
-    $annee = $_POST['annee'];
-    $domaine = $_POST['domaine'];
+    $titre = filter_input(INPUT_POST, 'titre', FILTER_SANITIZE_STRING);
+    $auteur = filter_input(INPUT_POST, 'auteur', FILTER_SANITIZE_STRING);
+    $universite = filter_input(INPUT_POST, 'universite', FILTER_SANITIZE_STRING);
+    $annee = filter_input(INPUT_POST, 'annee', FILTER_VALIDATE_INT);
+    $domaine = filter_input(INPUT_POST, 'domaine', FILTER_SANITIZE_STRING);
     $fichier = $_FILES['fichier']['name'];
 
     $target_dir = "uploads/";
     $target_file = $target_dir . basename($fichier);
 
-    if (move_uploaded_file($_FILES['fichier']['tmp_name'], $target_file)) {
+    // Validation de l'extension de fichier
+    $fileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+    $allowedTypes = array("pdf", "doc", "docx");
+    if (!in_array($fileType, $allowedTypes)) {
+        echo "Désolé, seuls les fichiers PDF, DOC et DOCX sont autorisés.";
+        exit();
+    }
+
+    // Renommage du fichier pour éviter les conflits
+    $newFileName = uniqid() . "." . $fileType;
+    $newFilePath = $target_dir . $newFileName;
+
+    if (move_uploaded_file($_FILES['fichier']['tmp_name'], $newFilePath)) {
         $sql = "INSERT INTO memoires (titre, auteur, universite, annee, domaine, fichier) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$titre, $auteur, $universite, $annee, $domaine, $fichier]);
+        $stmt->execute([$titre, $auteur, $universite, $annee, $domaine, $newFileName]);
         echo "Mémoire soumis avec succès.";
-        // Redirection vers la page principale après soumission réussie
         header("Location: index.php");
         exit();
     } else {
@@ -25,6 +36,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -145,6 +158,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });	
 </script>
+
 <body>
     <div class="container">
         <h2>Publier un mémoire sur DépotMemo</h2>
@@ -192,7 +206,12 @@ document.addEventListener('DOMContentLoaded', function () {
     <footer>
         <p>Si vous rencontrez des difficultés pour utiliser ce formulaire, n'hésitez pas à prendre contact avec le <a href="mailto:depotmemo@gmail.com">webmaster</a>.</p>
         <p><a href="index.php">Retour page d'accueil</a></p>
-    </footer>   
+    </footer>
 </body>
 </html>
+
+</html>
+
+
+
 
