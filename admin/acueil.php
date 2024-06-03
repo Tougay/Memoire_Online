@@ -61,7 +61,9 @@ $memoires = $stmt->fetchAll();
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         #header img {
-            height: 50px;
+             width: 120px;
+            height: 100px;
+            margin-left: 500px;
         }
         #header h1 {
             font-size: 24px;
@@ -262,8 +264,7 @@ $memoires = $stmt->fetchAll();
 </head>
 <body>
 <div id="header">
-    <img src="5570061.jpg" alt="Mémoire Online Logo" width="200" height="50">
-    <h1>DépotMemo</h1>
+     <img src="logo.png" alt="depot memo Logo" >
     <nav>
         <a href="#publication">Publication</a>
         <a href="#categories">Catégories</a>
@@ -304,7 +305,7 @@ $memoires = $stmt->fetchAll();
                     <a href="acueil.php?domaine=Économie et Finance">Économie et Finance</a>
                     <a href="acueil.php?domaine=Histoire">Histoire</a>
                     <a href="acueil.php?domaine=Sciences">Sciences</a>
-                    <a href="acueil.php?domaine=Rapports de stage">Rapports de stage</a>
+                    <a href="acueil.php?domaine=Rapports de stage">Rapports de stage</a> <a href="acueil.php?domaine=Autre">Autre</a>
                 </td>
             </tr>
         </table>
