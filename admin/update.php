@@ -217,6 +217,7 @@ if (isset($_POST['modifier'])) {
                             <option value="Histoire" <?php echo ($memoire['domaine'] == "Histoire") ? "selected" : "" ?>>Histoire</option>
                             <option value="Sciences" <?php echo ($memoire['domaine'] == "Sciences") ? "selected" : "" ?>>Sciences</option>
                             <option value="Rapports de stage" <?php echo ($memoire['domaine'] == "Rapports de stage") ? "selected" : "" ?>>Rapports de stage</option>
+                             <option value="Autre" <?php echo ($memoire['domaine'] == "Autre") ? "selected" : "" ?>>Autre</option>
                         </select>
                     </div>
                     <div class="form-group">

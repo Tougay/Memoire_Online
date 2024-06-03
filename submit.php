@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <option value="Communication et Journalisme">Communication et Journalisme</option>
                 <option value="Enseignement">Enseignement</option>
                 <option value="Informatique et Télécommunications">Informatique et Télécommunications</option>
-                <option value="Sport">Sport</option>
+               
                 <option value="Biologie et Médecine">Biologie et Médecine</option>
                 <option value="Droit et Sciences Politiques">Droit et Sciences Politiques</option>
                 <option value="Géographie">Géographie</option>
@@ -192,6 +192,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <option value="Histoire">Histoire</option>
                 <option value="Sciences">Sciences</option>
                 <option value="Rapports de stage">Rapports de stage</option>
+                <option value="Autre">Autre</option>
             </select><br><br>
 
             <label for="fichier">Fichier à publier :</label>

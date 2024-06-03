@@ -53,7 +53,9 @@ $memoires = $stmt->fetchAll();
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         #header img {
-            height: 50px;
+            width: 120px;
+            height: 100px;
+            margin-left: 500px;
         }
         #header h1 {
             font-size: 24px;
@@ -194,8 +196,9 @@ $memoires = $stmt->fetchAll();
 </head>
 <body>
 <div id="header">
-    <img src="5570061.jpg" alt="Mémoire Online Logo" width="200" height="50">
-    <h1>DépotMemo</h1>
+     <img src="logo.png" alt="Mémoire Online Logo" >
+   
+ 
     <nav>
         <a href="#publication">Publication</a>
         <a href="#categories">Catégories</a>
@@ -221,7 +224,7 @@ $memoires = $stmt->fetchAll();
                 <a href="index.php?domaine=Communication et Journalisme">Communication et Journalisme</a>
                 <a href="index.php?domaine=Enseignement">Enseignement</a>
                 <a href="index.php?domaine=Informatique et Télécommunications">Informatique et Télécommunications</a>
-                <a href="index.php?domaine=Sport">Sport</a>
+                 <a href="index.php?domaine=Commerce et Marketing">Commerce et Marketing</a>
             </div>
             <div class="col-md-4">
                 <a href="index.php?domaine=Biologie et Médecine">Biologie et Médecine</a>
@@ -231,11 +234,11 @@ $memoires = $stmt->fetchAll();
                 <a href="index.php?domaine=Tourisme">Tourisme</a>
             </div>
             <div class="col-md-4">
-                <a href="index.php?domaine=Commerce et Marketing">Commerce et Marketing</a>
                 <a href="index.php?domaine=Économie et Finance">Économie et Finance</a>
                 <a href="index.php?domaine=Histoire">Histoire</a>
                 <a href="index.php?domaine=Sciences">Sciences</a>
                 <a href="index.php?domaine=Rapports de stage">Rapports de stage</a>
+                 <a href="index.php?domaine=Autre">Autre</a>
             </div>
         </div>
     </section>
