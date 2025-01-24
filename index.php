@@ -238,7 +238,7 @@ $memoires = $stmt->fetchAll();
                 <a href="index.php?domaine=Histoire">Histoire</a>
                 <a href="index.php?domaine=Sciences">Sciences</a>
                 <a href="index.php?domaine=Rapports de stage">Rapports de stage</a>
-                 <a href="index.php?domaine=Autre">Autre</a>
+                 <a href="index.php?domaine=Autres">Autres</a>
             </div>
         </div>
     </section>

@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <option value="Histoire">Histoire</option>
                 <option value="Sciences">Sciences</option>
                 <option value="Rapports de stage">Rapports de stage</option>
-                <option value="Autre">Autre</option>
+                <option value="Autres">Autres</option>
             </select><br><br>
 
             <label for="fichier">Fichier à publier :</label>

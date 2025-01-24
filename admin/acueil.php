@@ -305,7 +305,7 @@ $memoires = $stmt->fetchAll();
                     <a href="acueil.php?domaine=Économie et Finance">Économie et Finance</a>
                     <a href="acueil.php?domaine=Histoire">Histoire</a>
                     <a href="acueil.php?domaine=Sciences">Sciences</a>
-                    <a href="acueil.php?domaine=Rapports de stage">Rapports de stage</a> <a href="acueil.php?domaine=Autre">Autre</a>
+                    <a href="acueil.php?domaine=Rapports de stage">Rapports de stage</a> <a href="acueil.php?domaine=Autres">Autres</a>
                 </td>
             </tr>
         </table>
